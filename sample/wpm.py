@@ -32,6 +32,7 @@ class WPM:
         self.printed_text = ""
         self.stats = WPMStatistics()
         self.is_playing = True
+        self.was_interrupted = False
 
     def reset(self) -> None:
         """Reset parameters"""
@@ -45,6 +46,8 @@ class WPM:
         """Call to start the process of the test"""
         self.reset()
         self.process()
+        if self.was_interrupted:
+            return None
         self.end_screen()
         return self.stats
 
@@ -83,7 +86,10 @@ class WPM:
         "Manage players keyboard inputs"
         symbol = self.window.getch()
         expected_sym = self.target_text[len(self.printed_text)]
-        if chr(symbol) != expected_sym:
+        if symbol == constants.ESCAPE:
+            self.is_playing = False
+            self.was_interrupted = True
+        elif chr(symbol) != expected_sym:
             self.stats.add_error_char(expected_sym.lower())
             curses.beep()
         else:

@@ -10,6 +10,8 @@ class DataManager:
     @staticmethod
     def update_data(statistics : WPMStatistics):
         """Update data in user statistics"""
+        if statistics is None:
+            return
         user_stat = {}
         with open(constants.PATH_TO_DATA, "r", encoding="utf8") as json_file:
             user_stat = json.load(json_file)

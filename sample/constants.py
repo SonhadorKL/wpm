@@ -22,7 +22,11 @@ def init_colors():
     MAGENTA_BLACK = curses.color_pair(2)
     GREEN_BLACK = curses.color_pair(3)
 
-
-
 # Paths
 PATH_TO_DATA = "data/user_statistics.json"
+
+# KEYS
+ESCAPE = 27
+ENTER = 10
+SPACE = 32
+BACKSPACE = 127
