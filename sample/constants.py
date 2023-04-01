@@ -1,4 +1,5 @@
 import curses
+import string
 
 # Constants for colors
 COLOR_GREY = 240
@@ -30,3 +31,15 @@ ESCAPE = 27
 ENTER = 10
 SPACE = 32
 BACKSPACE = 127
+
+def get_text_height(window : curses.window, text : str) -> int:
+    """return the height of string in given window"""
+    return (len(text) - 1) // window.getmaxyx()[1] + 1
+
+def check_letter(char : str) -> bool:
+    """Check if char is can be printed"""
+    is_alpha = char.isalpha()
+    is_digit = char.isdigit()
+    is_space = char == " "
+    is_punctiation = char in string.punctuation
+    return is_alpha or is_digit or is_space or is_punctiation

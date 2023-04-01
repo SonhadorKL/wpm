@@ -1,7 +1,5 @@
 import curses
-import string
 from sample import commands
-from sample import text_manager
 from sample import constants
 
 
@@ -18,15 +16,21 @@ class Menu:
 
     def launch(self) -> str:
         """
-        Launch menu
+        Launch menu\n
         Return choosen item in menu
         """
         curses.curs_set(0)
+        self.reset(self.items_name)
         while self.is_processing:
             self.print_menu()
             self.process_input()
         curses.curs_set(1)
         return self.result
+
+    def reset(self, names : list) -> None:
+        self.is_processing = True
+        self.result = ""
+        self.choosen_item = 0
 
     def print_menu(self):
         """"Print menu in console"""
@@ -119,7 +123,7 @@ class ConsoleMenu(Menu):
                 else:
                     self.under_string = "Command not found"          
             return
-        elif text_manager.check_letter(chr(user_input)):
+        elif constants.check_letter(chr(user_input)):
             self.user_input += chr(user_input)
         self.under_string = self.user_input
 
