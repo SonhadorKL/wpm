@@ -58,11 +58,11 @@ def get_file_text(path : str):
 def file_preview(window : curses.window):
     """Show names of texts as a menu with ability to watch texts itself"""
     is_processing = True
-    options = ["QUIT"] + get_files("texts")
+    options = get_files("texts") + ["Quit"]
     preview_menu = menu.Menu(window, "Loaded files", options)
     while is_processing:
         user_input = preview_menu.launch()
-        if user_input == "QUIT":
+        if user_input == "Quit":
             is_processing = False
         else:
             show_plate = plate.ShowPlate(window, user_input, get_file_text("texts/" + user_input))
@@ -97,15 +97,17 @@ def file_creating(window : curses.window):
     name_headline = "Write a name for the file"
     name_example = "Example: HardText"
     file_name = ""
-    while file_name == "":
-        write_name = plate.WritablePlate(window, name_headline, name_example)
-        file_name = write_name.process()
+    write_name = plate.WritablePlate(window, name_headline, name_example)
+    file_name = write_name.process()
+    if file_name == "":
+        return
     # get content of file
     text_headline = "Write a text (or just paste it using <Ctrl + V>)"
     file_content = ""
-    while file_content == "":
-        write_text = plate.WritablePlate(window, text_headline, "")
-        file_content = write_text.process()
+    write_text = plate.WritablePlate(window, text_headline, "")
+    file_content = write_text.process()
+    if file_name == "":
+        return
     add_text(file_name, file_content)
 
 

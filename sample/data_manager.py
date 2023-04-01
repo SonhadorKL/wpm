@@ -1,4 +1,5 @@
 import json
+import time
 from sample.wpm import WPMStatistics
 from sample import constants
 
@@ -17,6 +18,7 @@ class DataManager:
             user_stat = json.load(json_file)
             user_stat["test.wpm"] += statistics.wpm
             user_stat["test.count"] += 1
+            user_stat["test.time"] += time.time() - statistics.start_time
             user_stat["test.bestwpm"] = max(user_stat["test.bestwpm"], statistics.wpm)
             for letter in statistics.symbol_count:
                 if letter in user_stat["letters.count"]:
@@ -31,3 +33,8 @@ class DataManager:
                     user_stat["letters.errors"][letter] = statistics.symbol_errors[letter]
         with open(constants.PATH_TO_DATA, "w", encoding="utf8") as json_file:
             json.dump(user_stat, json_file)
+
+    @staticmethod
+    def get_data() -> dict:
+        with open(constants.PATH_TO_DATA, "r", encoding="utf8") as json_file:
+            return json.load(json_file)

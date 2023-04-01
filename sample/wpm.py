@@ -8,6 +8,7 @@ class WPMStatistics:
     def __init__(self) -> None:
         self.wpm = 0.0
         self.errors = 0
+        self.start_time = time.time()
         self.symbol_count = {}
         self.symbol_errors = {}
 
@@ -28,7 +29,6 @@ class WPM:
     def __init__(self, target_text : str, window : curses.window) -> None:
         self.window = window.subwin(0, 0)
         self.target_text = target_text
-        self.start_time = 0
         self.printed_text = ""
         self.stats = WPMStatistics()
         self.is_playing = True
@@ -36,7 +36,7 @@ class WPM:
 
     def reset(self) -> None:
         """Reset parameters"""
-        self.start_time = time.time()
+        self.stats.start_time = time.time()
         self.printed_text = ""
         self.stats = WPMStatistics()
         self.stats.get_occurences(self.target_text)
@@ -67,11 +67,11 @@ class WPM:
         self.window.refresh()
         self.window.getch()
 
-
     def put_info(self) -> None:
         """put general info on the screen"""
-        end_of_win = self.window.getmaxyx()[0] - 1
-        self.window.addstr(end_of_win, 0, self.get_stat(), constants.MAGENTA_BLACK)
+        stats = self.get_stat()
+        end_of_win = self.window.getmaxyx()[0] - constants.get_text_height(self.window, stats)
+        self.window.addstr(end_of_win, 0, stats, constants.MAGENTA_BLACK)
         self.window.move(0, 0)
         self.window.addstr(0, 0, self.target_text, constants.GREY_BLACK)
         self.window.addstr(0, 0, self.printed_text, constants.GREEN_BLACK)
@@ -99,6 +99,11 @@ class WPM:
      
     def get_stat(self) -> str:
         """Return and update a string with current player statistics"""
-        wpm = round(len(self.printed_text) * 60 / (time.time() - self.start_time), 2)
+        wpm = round(len(self.printed_text) * 60 / (time.time() - self.stats.start_time), 2)
         self.stats.wpm = wpm
-        return f"WPM: {wpm}\tERRORS: {self.stats.errors}"
+        wpm_text = f"WPM: {wpm}"
+        errors_text = f"Errors: {self.stats.errors}"
+        done_text = f"Done: {len(self.printed_text)} / {len(self.target_text)}"
+        time_text = f"Time: {round(time.time() - self.stats.start_time, 2)}"
+        sp = " " * 4
+        return f"{wpm_text}{sp}{errors_text}{sp}{done_text}{sp}{time_text}{sp}"

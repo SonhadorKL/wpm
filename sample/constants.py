@@ -34,7 +34,7 @@ BACKSPACE = 127
 
 def get_text_height(window : curses.window, text : str) -> int:
     """return the height of string in given window"""
-    return (len(text) - 1) // window.getmaxyx()[1] + 1
+    return (len(text)) // window.getmaxyx()[1] + 1
 
 def check_letter(char : str) -> bool:
     """Check if char is can be printed"""

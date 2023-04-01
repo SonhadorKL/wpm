@@ -5,7 +5,7 @@ from sample import constants
 
 class Menu:
     """Class for creating console menu"""
-    def __init__(self, window : curses.window, menu_name : str, names : list, under_string = "") -> None:
+    def __init__(self, window : curses.window, menu_name : str, names : list, under_string = "", allow_quit = False) -> None:
         self.window = window.subwin(0, 0)
         self.items_name = names
         self.name = menu_name
@@ -13,6 +13,7 @@ class Menu:
         self.result = ""
         self.choosen_item = 0
         self.under_string = under_string
+        self.can_quit = allow_quit
 
     def launch(self) -> str:
         """
@@ -50,6 +51,9 @@ class Menu:
         elif user_input == constants.ENTER: # code of ENTER key
             self.is_processing = False
             self.result = self.items_name[self.choosen_item]
+        elif user_input == constants.ESCAPE and self.can_quit:
+            self.is_processing = False
+            self.result = ""
         return user_input
 
     def _get_height_of_string(self, line : str) -> int:
