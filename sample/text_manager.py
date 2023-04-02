@@ -1,10 +1,9 @@
-"""Module which contains some useful functions to manipulate with texts"""
+"""Module which contains some useful functions to manipulate texts"""
 import curses
 import os
 import random
 from sample import menu
 from sample import plate
-
 
 def choose_text(stdscr : curses.window) -> str:
     """Launch menu to get text file"""

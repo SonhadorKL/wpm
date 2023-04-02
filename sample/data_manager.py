@@ -36,5 +36,20 @@ class DataManager:
 
     @staticmethod
     def get_data() -> dict:
+        """Returt dictionaty with all user's statistics"""
         with open(constants.PATH_TO_DATA, "r", encoding="utf8") as json_file:
             return json.load(json_file)
+
+    @staticmethod
+    def reset_data() -> None:
+        """Set statistics to start values"""
+        data = {}
+        with open(constants.PATH_TO_DATA, "r", encoding="utf8") as json_file:
+            data = json.load(json_file)
+            for key in data:
+                if isinstance(data[key], dict):
+                    data[key] = {}
+                elif isinstance(data[key], (int, float)):
+                    data[key] = 0
+        with open(constants.PATH_TO_DATA, "w", encoding="utf8") as json_file:
+            json.dump(data, json_file)
