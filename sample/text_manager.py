@@ -6,7 +6,10 @@ from sample import menu
 from sample import plate
 
 def choose_text(stdscr : curses.window) -> str:
-    """Launch menu to get text file"""
+    """
+    Launch menu to get text file
+    Return (file_name, text)
+    """
     random_file_case = "RANDOM FILE"
     files = get_files("texts")
     options = [random_file_case] + files
@@ -17,7 +20,7 @@ def choose_text(stdscr : curses.window) -> str:
     else:
         file_name = chosen_option
     with open("texts/" + file_name, "r", encoding="utf8") as file:
-        return "".join(file.readlines())
+        return (file_name[:-4], "".join(file.readlines()))
 
 def load_text(stdscr : curses.window):
     """Launch menu to load new files"""

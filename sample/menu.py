@@ -1,7 +1,5 @@
 import curses
-from sample import commands
 from sample import constants
-
 
 class Menu:
     """Class for creating console menu"""
@@ -134,7 +132,7 @@ class ConsoleMenu(Menu):
     def check_command(self, command : str) -> bool:
         """Check if command is available"""
         return any(com.check_command(command) for com in self.commands)
-    
+
     def check_wrong_argument(self, command : str) -> str:
         """Check if command is available but user gave wrong args"""
         for com in self.commands:

@@ -6,8 +6,11 @@ class Statistics:
     """"Class to display user statistics"""
     def __init__(self, window : curses.window) -> None:
         self.window = window.subwin(0, 0)
+        self._set_data()
+
+    def _set_data(self):
         self.data = data_manager.DataManager.get_data()
-        self.main_menu = menu.Menu(window, "Statistics", self._get_menu_options_())
+        self.main_menu = menu.Menu(self.window, "Statistics", self._get_menu_options_())
 
     def process(self) -> None:
         """Main loop"""
@@ -19,7 +22,8 @@ class Statistics:
                 break
             elif user_option == "Reset statistics":
                 data_manager.DataManager.reset_data()
-                self.data = data_manager.DataManager.get_data()
+                data_manager.TextDataManager.reset_data()
+                self._set_data()
 
     def _get_menu_options_(self) -> str:
         options = []
