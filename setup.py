@@ -9,11 +9,11 @@ from sample import stat_menu
 from sample import settings
 
 def main(stdscr):
-    """Just testing"""
+    """Main body of the application"""
     constants.init_colors()
     is_playing = True
     while is_playing:
-        options = ["Start test", "Text loading", "Statistics", "Settings", "Quit"] 
+        options = ["Start test", "Text loading", "Statistics", "Settings", "Quit"]
         men = menu.Menu(stdscr, "WPM-Test", options)
         result = men.launch()
         if result == "Start test":
