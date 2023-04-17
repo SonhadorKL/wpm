@@ -1,0 +1,6 @@
+.vscode
+sample/__pycache__
+test.py
+test2.py
+reset_stat.py
+venv
