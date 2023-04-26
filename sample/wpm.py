@@ -6,6 +6,16 @@ from sample.text_unit import TextUnit
 from sample import data_manager
 from sample import constants
 
+def write_string_to_file(file_path, text):
+    try:
+        with open(file_path, 'w') as file:
+            file.write(text)
+        print(f'Successfully wrote string to file: {file_path}')
+    except Exception as e:
+        print(f'Error writing string to file: {e}')
+
+
+
 class WPMTest:
     """Class for the test of words per minute"""
     def __init__(self, window : curses.window, file_name : str) -> None:
@@ -48,12 +58,14 @@ class WPMTest:
         self.set_headline()
         self.set_main_text()
         self.set_under_text()
+        
+        main_text_pos = self.headline.get_text_height(self.window)
+        under_pos = self.window.getmaxyx()[0] - self.under_string.get_text_height(self.window)
+
         self.headline.print_on_screen(self.window, (0, 0))
 
-        under_pos = self.window.getmaxyx()[0] - self.under_string.get_text_height(self.window)
         self.under_string.print_on_screen(self.window, (under_pos, 0))
 
-        main_text_pos = self.headline.get_text_height(self.window)
         self.main_text.print_on_screen(self.window, (main_text_pos, 0))
 
     def update_window(self) -> None:

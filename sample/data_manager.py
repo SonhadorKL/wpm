@@ -119,10 +119,26 @@ class SettingsManager:
             return data["test.type"]
 
     @staticmethod
+    def get_nickname() -> str:
+        """Get user's test mode"""
+        with open(constants.PATH_TO_SETTINGS, "r", encoding="utf8") as json_file:
+            data = json.load(json_file)
+            return data["multiplayer.nickname"]
+
+    @staticmethod
     def set_test_type(test_type : str) -> None:
         """Set user's test mode"""
         with open(constants.PATH_TO_SETTINGS, "r", encoding="utf8") as json_file:
             data = json.load(json_file)
             data["test.type"] = test_type
+        with open(constants.PATH_TO_SETTINGS, "w", encoding="utf8") as json_file:
+            json.dump(data, json_file)
+
+    @staticmethod
+    def set_nickname(nickname : str) -> None:
+        """Set user's test mode"""
+        with open(constants.PATH_TO_SETTINGS, "r", encoding="utf8") as json_file:
+            data = json.load(json_file)
+            data["multiplayer.nickname"] = nickname
         with open(constants.PATH_TO_SETTINGS, "w", encoding="utf8") as json_file:
             json.dump(data, json_file)
