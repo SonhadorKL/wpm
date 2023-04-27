@@ -42,9 +42,9 @@ class Network:
         player_info = SendData("player", text=data)
         self.user_socket.send(pickle.dumps(player_info))
         response = self.user_socket.recv(1024)
-        return pickle.loads(response).data["text"]
+        return pickle.loads(response).data
 
-    # def update_data(self, data : SendData):
+    # def update_data(self, data : str):
     #     """Run to update data on server. Return other player's progress"""
     #     player_info = SendData("player", text=data)
     #     self.user_socket.send(pickle.dumps(player_info))

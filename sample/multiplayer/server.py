@@ -11,7 +11,6 @@ class Server:
         self.user_data = []
         self.players_sockets = []
         self.choosed_texts = []
-        self.nicknames = []
         self.player_count = 0
         self.is_running = False
         self._open_server() 
@@ -24,7 +23,6 @@ class Server:
             socket.close()
         self.players_sockets = []
         self.choosed_texts = []
-        self.nicknames = []
         self.user_data = [SendData("player", nick="player1", text=""),
                           SendData("player", nick="player2", text="")]
         self.player_count = 0
@@ -50,7 +48,7 @@ class Server:
                 # Get basic information about user
                 if data.tag == "text":
                     self.choosed_texts.append((data.data["name"], data.data["text"]))
-                    self.nicknames.append(data.data["nickname"])
+                    self.user_data[player_num - 1].data["nickname"] = data.data["nickname"]
                     print("Connected:",data.data["nickname"])
                     continue
                 # Dead
@@ -94,7 +92,7 @@ class Server:
         while len(self.choosed_texts) != 2:
             pass
         text = random.choice(self.choosed_texts)
-        choosed_text = SendData("text", text=text[1], name=f"{self.nicknames[0]} vs. {self.nicknames[1]}")
+        choosed_text = SendData("text", text=text[1], name=f"{self.user_data[0].data['nickname']} vs. {self.user_data[1].data['nickname']}")
         for sockets in self.players_sockets:
             sockets.sendall(pickle.dumps(choosed_text))
         print("Start the game!")
