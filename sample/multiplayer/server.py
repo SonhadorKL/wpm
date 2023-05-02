@@ -91,7 +91,8 @@ class Server:
         while len(self.choosed_texts) != 2:
             pass
         text = random.choice(self.choosed_texts)
-        choosed_text = SendData("text", text=text[1], name=f"{self.user_data[0].data['nickname']} vs. {self.user_data[1].data['nickname']}")
+        name_of_window = f"{self.user_data[0].data['nickname']} vs. {self.user_data[1].data['nickname']}"
+        choosed_text = SendData("text", text=text[1], name=name_of_window)
         for sockets in self.players_sockets:
             sockets.sendall(pickle.dumps(choosed_text))
         print("Start the game!")
