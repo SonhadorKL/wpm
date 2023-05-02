@@ -5,7 +5,7 @@ import pickle
 from sample.multiplayer.data import SendData
 
 class Server:
-    """Just a server. Run if you want to be able to play with your friends"""
+    """Just a server. Run if you want to play with your friends"""
     def __init__(self) -> None:
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.user_data = []
@@ -13,7 +13,7 @@ class Server:
         self.choosed_texts = []
         self.player_count = 0
         self.is_running = False
-        self._open_server() 
+        self._open_server()
         ip_address = socket.gethostbyname(socket.gethostname())
         print(f'Server {ip_address} is open. Waiting for connection...')
 
@@ -31,7 +31,6 @@ class Server:
 
     def _open_server(self):
         """It's fine"""
-        # Not sure about IP-adress
         self.server_socket.bind(('0.0.0.0', 5555))
         # Maximum two players
         self.server_socket.listen(2)
