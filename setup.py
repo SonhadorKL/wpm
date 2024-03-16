@@ -7,13 +7,14 @@ from sample import menu
 from sample import text_manager
 from sample import stat_menu
 from sample import settings
+from sample.multiplayer import connection
 
 def main(stdscr):
     """Main body of the application"""
     constants.init_colors()
     is_playing = True
     while is_playing:
-        options = ["Start test", "Text loading", "Statistics", "Settings", "Quit"]
+        options = ["Start test", "Multiplayer", "Text loading", "Statistics", "Settings", "Quit"]
         men = menu.Menu(stdscr, "WPM-Test", options)
         result = men.launch()
         if result == "Start test":
@@ -28,6 +29,9 @@ def main(stdscr):
                 test = wpm.ClassicWPM(stdscr, text_info[1], text_info[0])
                 stats = test.wpm_test()
                 data_manager.DataManager.update_data(stats)
+        elif result == "Multiplayer":
+            connect = connection.MultiplayerConnection(stdscr)
+            connect.run()
         elif result == "Quit":
             is_playing = False
         elif result == "Text loading":

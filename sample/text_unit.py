@@ -22,6 +22,10 @@ class TextUnit:
                 window.addstr(*pos, self.texts[i], self.attrs[i])
             else:
                 window.addstr(*start_pos, self.texts[i], self.attrs[i])
+        # How does it even work before???
+        self.texts.clear()
+        self.attrs.clear()
+        self.poses.clear()
 
     def get_text_height(self, win : curses.window) -> int:
         """Return height of the whole text"""

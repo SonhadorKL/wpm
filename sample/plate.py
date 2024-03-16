@@ -66,11 +66,15 @@ class ShowPlate(Plate):
     def update(self):
         """Draw text until user leave"""
         while self.is_processing:
-            self.window.erase()
-            self._print_on_screen()
-            self.window.refresh()
+            self.print_screen()
             self._get_input()
         curses.curs_set(1)
+    
+    def print_screen(self):
+        """Distplay screen"""
+        self.window.erase()
+        self._print_on_screen()
+        self.window.refresh()
 
     def _get_input(self):
         """Check if return button pressed"""
